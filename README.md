@@ -1,70 +1,153 @@
-Healix-AI
+# Project Setup Guide
 
-Healix-AI is an AI-powered medical assistant that leverages voice and vision capabilities to assist users with medical inquiries. The project was originally built using Gradio and is now transitioning to Streamlit for a more interactive and user-friendly interface.
+This guide provides step-by-step instructions to set up your project environment, including the installation of FFmpeg and PortAudio across macOS, Linux, and Windows, as well as setting up a Python virtual environment using Pipenv, pip, or conda.
 
-Features
+## Table of Contents
 
-Voice Recognition: Users can ask medical questions using speech.
+1. [Installing FFmpeg and PortAudio](#installing-ffmpeg-and-portaudio)
+   - [macOS](#macos)
+   - [Linux](#linux)
+   - [Windows](#windows)
+2. [Setting Up a Python Virtual Environment](#setting-up-a-python-virtual-environment)
+   - [Using Pipenv](#using-pipenv)
+   - [Using pip and venv](#using-pip-and-venv)
+   - [Using Conda](#using-conda)
+3. [Running the application](#project-phases-and-python-commands)
 
-Image Processing: AI can analyze medical images.
+## Installing FFmpeg and PortAudio
 
-Natural Language Processing: Understands and responds to health-related queries.
+### macOS
 
-FastAPI Backend: Manages AI model processing.
+1. **Install Homebrew** (if not already installed):
 
-Streamlit UI: Provides an intuitive user interface for better accessibility.
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
 
-Installation
+2. **Install FFmpeg and PortAudio:**
 
-1. Clone the Repository
+   ```bash
+   brew install ffmpeg portaudio
+   ```
 
-git clone https://github.com/AIwithhassan/ai-doctor-2.0-voice-and-vision.git
-cd healix-ai
 
-2. Create a Virtual Environment
+### Linux
+For Debian-based distributions (e.g., Ubuntu):
 
+1. **Update the package list**
+
+```
+sudo apt update
+```
+
+2. **Install FFmpeg and PortAudio:**
+```
+sudo apt install ffmpeg portaudio19-dev
+```
+
+### Windows
+
+#### Download FFmpeg:
+1. Visit the official FFmpeg download page: [FFmpeg Downloads](https://ffmpeg.org/download.html)
+2. Navigate to the Windows builds section and download the latest static build.
+
+#### Extract and Set Up FFmpeg:
+1. Extract the downloaded ZIP file to a folder (e.g., `C:\ffmpeg`).
+2. Add the `bin` directory to your system's PATH:
+   - Search for "Environment Variables" in the Start menu.
+   - Click on "Edit the system environment variables."
+   - In the System Properties window, click on "Environment Variables."
+   - Under "System variables," select the "Path" variable and click "Edit."
+   - Click "New" and add the path to the `bin` directory (e.g., `C:\ffmpeg\bin`).
+   - Click "OK" to apply the changes.
+
+#### Install PortAudio:
+1. Download the PortAudio binaries from the official website: [PortAudio Downloads](http://www.portaudio.com/download.html)
+2. Follow the installation instructions provided on the website.
+
+---
+
+## Setting Up a Python Virtual Environment
+
+### Using Pipenv
+1. **Install Pipenv (if not already installed):**  
+```
+pip install pipenv
+```
+
+2. **Install Dependencies with Pipenv:** 
+
+```
+pipenv install
+```
+
+3. **Activate the Virtual Environment:** 
+
+```
+pipenv shell
+```
+
+---
+
+### Using `pip` and `venv`
+#### Create a Virtual Environment:
+```
 python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
 
-3. Install Dependencies
+#### Activate the Virtual Environment:
+**macOS/Linux:**
+```
+source venv/bin/activate
+```
 
+**Windows:**
+```
+venv\Scripts\activate
+```
+
+#### Install Dependencies:
+```
 pip install -r requirements.txt
+```
 
-Running the Application
+---
 
-Using Streamlit
+### Using Conda
+#### Create a Conda Environment:
+```
+conda create --name myenv python=3.11
+```
 
-streamlit run app.py
+#### Activate the Conda Environment:
+```
+conda activate myenv
+```
 
-Running the FastAPI Backend
+#### Install Dependencies:
+```
+pip install -r requirements.txt
+```
 
-uvicorn main:app --host 0.0.0.0 --port 8000
 
-Converting Gradio to Streamlit
+# Project Phases and Python Commands
 
-If you are migrating from Gradio to Streamlit:
+## Phase 1: Brain of the doctor
+```
+python brain_of_the_doctor.py
+```
 
-Replace import gradio as gr with import streamlit as st.
+## Phase 2: Voice of the patient
+```
+python voice_of_the_patient.py
+```
 
-Update UI components (e.g., gr.Interface -> st.button, st.text_input, etc.).
+## Phase 3: Voice of the doctor
+```
+python voice_of_the_doctor.py
+```
 
-Adjust the API calls accordingly for backend interaction.
-
-Tech Stack
-
-Frontend: Streamlit
-
-Backend: FastAPI
-
-Libraries: OpenAI, SpeechRecognition, PyTorch, Hugging Face models
-
-Contributors
-
-[Your Name]
-
-[Other Contributors]
-
-License
-
-This project is licensed under the MIT License.
-
+## Phase 4: Setup Gradio UI
+```
+python gradio_app.py
+```
