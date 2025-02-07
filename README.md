@@ -2,6 +2,7 @@
 
 This guide provides step-by-step instructions to set up your project environment, including the installation of FFmpeg and PortAudio across macOS, Linux, and Windows, as well as setting up a Python virtual environment using Pipenv, pip, or conda.
 
+![image alt](https://github.com/delleshkarthik/Healix-AI/blob/fd780be7f2ea279e81d6c030ed070add1f2368ff/med-ai.png)
 ## Table of Contents
 
 1. [Installing FFmpeg and PortAudio](#installing-ffmpeg-and-portaudio)
