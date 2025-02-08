@@ -1,8 +1,9 @@
-# Import necessary libraries
 import os
 import gradio as gr
 import webbrowser
 from threading import Timer
+from fastapi import FastAPI
+from gradio import mount_gradio_app
 from brain_of_the_doctor import encode_image, analyze_image_with_query
 from voice_of_the_patient import transcribe_with_groq
 from voice_of_the_doctor import text_to_speech_with_elevenlabs
@@ -21,10 +22,10 @@ If you are unsure about a condition, encourage seeking medical advice instead of
 💡 *Response Style:*
 - Do not say "In the image, I see..." Instead, phrase it as:
   "With what I see, I think you have..."
-- Keep responses *concise (max 2 sentences)* and *empathetic* while remaining professional.
+- Keep responses *concise (max 5 sentences)* and *empathetic* while remaining professional.
 """
 
-# Process user input
+# Function to process inputs
 def process_inputs(audio_filepath, image_filepath):
     speech_to_text_output = transcribe_with_groq(
         GROQ_API_KEY=os.environ.get("GROQ_API_KEY"),
@@ -50,7 +51,7 @@ def process_inputs(audio_filepath, image_filepath):
 
     return speech_to_text_output, doctor_response, "final.mp3"
 
-# Create an improved Gradio interface
+# Create Gradio UI
 with gr.Blocks(title="AI Doctor with Vision & Voice") as demo:
     gr.Markdown("## 🏥 AI Doctor with Vision & Voice")
     gr.Markdown("Upload an image, speak your symptoms, and receive a professional medical response.")
@@ -77,12 +78,18 @@ with gr.Blocks(title="AI Doctor with Vision & Voice") as demo:
         "👨‍💻 **Developed by [Dellesh Karthik Saradhi](https://www.linkedin.com/in/delleshkarthiksaradhi/)**"
     )
 
+# FastAPI app to support cloud deployment
+app = FastAPI()
+
+# Mount Gradio app on FastAPI
+app = mount_gradio_app(app, demo, path="/")
+
 # Function to open the browser automatically
 def open_browser():
     webbrowser.open("http://127.0.0.1:7860")
 
-# Run the app and open it in the browser automatically
+# Run the app
 if __name__ == "__main__":
     Timer(1, open_browser).start()
-    demo.launch(server_name="0.0.0.0", server_port=7860)
-
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860, reload=True)
