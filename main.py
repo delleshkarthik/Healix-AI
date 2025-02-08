@@ -84,4 +84,5 @@ def open_browser():
 # Run the app and open it in the browser automatically
 if __name__ == "__main__":
     Timer(1, open_browser).start()
-    demo.launch(share=False)
+    demo.launch(server_name="0.0.0.0", server_port=7860)
+
