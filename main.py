@@ -1,6 +1,8 @@
 # Import necessary libraries
 import os
 import gradio as gr
+import webbrowser
+from threading import Timer
 from brain_of_the_doctor import encode_image, analyze_image_with_query
 from voice_of_the_patient import transcribe_with_groq
 from voice_of_the_doctor import text_to_speech_with_elevenlabs
@@ -75,5 +77,11 @@ with gr.Blocks(title="AI Doctor with Vision & Voice") as demo:
         "👨‍💻 **Developed by [Dellesh Karthik Saradhi](https://www.linkedin.com/in/delleshkarthiksaradhi/)**"
     )
 
-# Run the app
-demo.launch(debug=True)
+# Function to open the browser automatically
+def open_browser():
+    webbrowser.open("http://127.0.0.1:7860")
+
+# Run the app and open it in the browser automatically
+if __name__ == "__main__":
+    Timer(1, open_browser).start()
+    demo.launch(share=False)
